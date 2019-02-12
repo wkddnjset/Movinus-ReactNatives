@@ -1,11 +1,17 @@
 import React, {Component} from 'react';
 import {AsyncStorage, Text, View} from 'react-native'
+import styled from 'styled-components/native'
 import { Icon, Button }  from 'native-base'
 import { Actions } from 'react-native-router-flux'
 // Components
 import HeaderComponent from './Header'
 
 type Props = {};
+
+const LogoImage = styled.Image`
+    width: 65;
+    height: 17;
+`
 
 export default class DrawerHeaderComponent extends Component<Props> {
     openDrawer(){
@@ -43,7 +49,7 @@ export default class DrawerHeaderComponent extends Component<Props> {
                         <Icon type="EvilIcons" name="navicon" style={{color:"#000", fontSize:30}}/>
                     </Button>
                 )}
-                navTitle="Movinus"
+                navTitle={(<LogoImage source={require('../Images/logo.png')}/>)}
                 navBarRight={(
                     <Button transparent onPress={this.openUser}>
                         <Icon type="EvilIcons" name="user" style={{color:"#000", fontSize:35}}/>

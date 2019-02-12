@@ -13,5 +13,5 @@
         android:contentDescription="@string/splash_logo_description"
         android:padding="100dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/logo" />
+        android:src="@drawable/launch_logo" />
 </LinearLayout>

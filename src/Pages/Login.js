@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import { Text, View, ImageBackground } from 'react-native'
+import { Text, View, ImageBackground, Image } from 'react-native'
 import styled from 'styled-components/native'
-import { Container, Icon, Button, H3, Thumbnail } from 'native-base'
+import { Container, Icon, Button, H3, Item, Input } from 'native-base'
 import { Col, Row, Grid } from 'react-native-easy-grid'
 // Components
 import HeaderComponent from '../Components/Header'
@@ -24,31 +24,50 @@ const CancleIcon =  styled(Icon)`
     fontSize:30;
     color: #FFFFFF;
 `
-const Logo = styled.Text`
-    color :#FFFFFF;
-    marginBottom : 30;
-    fontSize: 45;
-    fontWeight: bold;
-    marginTop: 150;
+const LogoContainer = styled.View`
+    height:100%;
+    alignItems: center;
+    justifyContent: center;
 `
-const SocialText = styled.Text`
-    color :#FFFFFF;
+const LogoImage = styled.Image`
+    marginTop: 120;
+    marginBottom: 120;
+    width: 280;
+    height: 70;
+    justifyContent: center;
+`
+const InputWrapper = styled(Item)`
+    marginTop: 10;
+    marginLeft: 10%;
+    marginRight: 10%;
+    paddingLeft: 10;
+    paddingRight: 10;
+    width: 80%;
+    height: 50;
+`
+const InputBox = styled(Input)`
+    color: #FFFFFF;
+`
+const LoginBtn =  styled(Button)`
+    background:#4586C6;
+    width:80%;
+    marginTop: 50;
+    marginLeft: 10%;
+    marginRight: 10%;
+    borderRadius: 50;
+`
+const LoginText = styled(H3)`
+    color : #FFFFFF;
+    width:100%;
     fontSize: 18;
-    marginTop: 75;
+    textAlign:center;
 `
-const KakaoBtn =  styled(Button)`
-    background:#F9E81E;
+const ToSignUpText = styled.Text`
+    color: #FFFFFF;
+    marginTop: 10;
+    textDecorationLine: underline;
 `
-const KakaoIcon = styled(Icon)`
-    color : #3F3035;
-    fontSize: 29;
-`
-const KakaoText = styled(H3)`
-    color : #3F3035;
-    marginRight: 15;
-    fontWeight: bold;
-`
-export default class Home extends Component<Props> {
+export default class Login extends Component<Props> {
     render() {
         return (
             <Container>
@@ -59,19 +78,20 @@ export default class Home extends Component<Props> {
                                 <CancleIcon name="close"/>
                             </CloseBtn>
                         </Row>
-                        <Row style={{justifyContent:"center", width:"100%", flex: 1}}>
-                            <Logo>Movinus</Logo>
-                        </Row>
-                        <Row style={{justifyContent:"center", width:"100%", flex: .4}}>
-                            <SocialText>──────── 간편로그인 ────────</SocialText>
-                        </Row>
-                        <Row style={{justifyContent:"center", width:"100%", flex: .6}}>
-                            <KakaoBtn transparent onPress={this.kakaoLogin}>
-                                <KakaoIcon type="Ionicons" name="ios-chatbubbles"/>
-                                <KakaoText>카카오톡으로 로그인하기</KakaoText>
-                            </KakaoBtn>
-                        </Row>
                     </Grid>
+                    <LogoContainer>
+                        <LogoImage source={require('../Images/logo.png')}/>
+                        <InputWrapper rounded>
+                            <InputBox returnKeyType='next' placeholder='이메일'/>
+                        </InputWrapper>
+                        <InputWrapper rounded>
+                            <InputBox secureTextEntry placeholder='비밀번호'/>
+                        </InputWrapper>
+                        <LoginBtn transparent onPress={this.kakaoLogin}>
+                            <LoginText>로그인 하기</LoginText>
+                        </LoginBtn>
+                        <ToSignUpText>아직 무비너스 회원이 아니신가요?</ToSignUpText>
+                    </LogoContainer>
                 </BackgourndImg>
             </Container>
         )

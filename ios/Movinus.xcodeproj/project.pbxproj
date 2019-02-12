@@ -58,6 +58,8 @@
 		6982C0C71D674FEDBA56D2F4 /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 225750E0886E4D3EAA654786 /* rubicon-icon-font.ttf */; };
 		C419D845098141A4AE3ABBF8 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AEF90661CF884242ACD55201 /* SimpleLineIcons.ttf */; };
 		03E137EF528E42E5987DA807 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 29F8286AD51F47FE8DEDF1A9 /* Zocial.ttf */; };
+		876787EC1BAB4730A9D6D643 /* BMJUA_ttf.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81AFE9B8CACD4B4C905ED612 /* BMJUA_ttf.ttf */; };
+		6A2877ECD198415CA61934C7 /* BMJUA.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BBE6675C6A0942D590CDD611 /* BMJUA.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -385,6 +387,8 @@
 		225750E0886E4D3EAA654786 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		AEF90661CF884242ACD55201 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		29F8286AD51F47FE8DEDF1A9 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		81AFE9B8CACD4B4C905ED612 /* BMJUA_ttf.ttf */ = {isa = PBXFileReference; name = "BMJUA_ttf.ttf"; path = "../assets/fonts/BMJUA_ttf.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BBE6675C6A0942D590CDD611 /* BMJUA.ttf */ = {isa = PBXFileReference; name = "BMJUA.ttf"; path = "../assets/fonts/BMJUA.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -673,6 +677,8 @@
 				225750E0886E4D3EAA654786 /* rubicon-icon-font.ttf */,
 				AEF90661CF884242ACD55201 /* SimpleLineIcons.ttf */,
 				29F8286AD51F47FE8DEDF1A9 /* Zocial.ttf */,
+				81AFE9B8CACD4B4C905ED612 /* BMJUA_ttf.ttf */,
+				BBE6675C6A0942D590CDD611 /* BMJUA.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1142,6 +1148,8 @@
 				6982C0C71D674FEDBA56D2F4 /* rubicon-icon-font.ttf in Resources */,
 				C419D845098141A4AE3ABBF8 /* SimpleLineIcons.ttf in Resources */,
 				03E137EF528E42E5987DA807 /* Zocial.ttf in Resources */,
+				876787EC1BAB4730A9D6D643 /* BMJUA_ttf.ttf in Resources */,
+				6A2877ECD198415CA61934C7 /* BMJUA.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
