@@ -1,14 +1,12 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- * @lint-ignore-every XPLATJSCOPYRIGHT1
- */
-
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import React, {Component} from 'react'
+import {Platform, StyleSheet, Text, View} from 'react-native'
+import { Scene, Router, Actions, ActionConst, Overlay, Tabs, Modal, Drawer, Stack, Lightbox } from 'react-native-router-flux'
+import SplashScreen from 'react-native-splash-screen'
+// Pages
+import Home from './src/Pages/Home'
+import Login from './src/Pages/Login'
+// Components
+import SideMenuComponent from './src/Components/SideMenu'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -19,32 +17,31 @@ const instructions = Platform.select({
 
 type Props = {};
 export default class App extends Component<Props> {
+  componentDidMount() {
+      SplashScreen.show();
+      setInterval(() => SplashScreen.hide(), 1200);
+  }
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <Router>
+        <Stack key="root">
+          <Scene 
+            key="drawer" 
+            drawer={true}
+            hideNavBar
+            contentComponent={SideMenuComponent}
+            drawerWidth={280}
+            drawerPosition="left"
+          >
+            <Scene 
+              hideNavBar
+              key="home" 
+              component={Home} 
+            />
+          </Scene>
+          <Scene key="login" component={Login} hideNavBar/>
+        </Stack>
+      </Router>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
