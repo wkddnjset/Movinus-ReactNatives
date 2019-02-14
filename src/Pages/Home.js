@@ -13,6 +13,10 @@ export default class Home extends Component<Props> {
             <Container>
                 <DrawerHeaderComponent/>
                 <Text>홈페이지 입니다.</Text>
+                <Text>홈페이지 입니다.</Text>
+                <Text>홈페이지 입니다.</Text>
+                <Text>홈페이지 입니다.</Text>
+                <Text>홈페이지 입니다.</Text>
             </Container>
         )
     }

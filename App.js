@@ -4,9 +4,13 @@ import { Scene, Router, Actions, ActionConst, Overlay, Tabs, Modal, Drawer, Stac
 import SplashScreen from 'react-native-splash-screen'
 // Pages
 import Home from './src/Pages/Home'
+import MyList from './src/Pages/MyList'
+import Search from './src/Pages/Search'
 import Login from './src/Pages/Login'
+import Detail from './src/Pages/Detail'
 // Components
 import SideMenuComponent from './src/Components/SideMenu'
+import DrawerHeaderComponent from './src/Components/DrawerHeader'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -18,29 +22,29 @@ const instructions = Platform.select({
 type Props = {};
 export default class App extends Component<Props> {
   componentDidMount() {
-      SplashScreen.show();
-      setInterval(() => SplashScreen.hide(), 1200);
+      SplashScreen.show()
+      setInterval(() => SplashScreen.hide(), 1200)
   }
   render() {
     return (
       <Router>
-        <Stack key="root">
+        <Scene key="root">
           <Scene 
             key="drawer" 
             drawer={true}
-            hideNavBar
             contentComponent={SideMenuComponent}
             drawerWidth={280}
             drawerPosition="left"
-          >
-            <Scene 
-              hideNavBar
-              key="home" 
-              component={Home} 
-            />
+            hideNavBar>
+            <Scene key="main"> 
+              <Scene key="home" component={Home} type='replace' hideNavBar/>
+              <Scene key="my_list" component={MyList} type='replace' hideNavBar/>
+              <Scene key="search" component={Search} type='replace' hideNavBar/>
+            </Scene>
           </Scene>
           <Scene key="login" component={Login} hideNavBar/>
-        </Stack>
+          <Scene key="detail" component={Detail} hideNavBar/>
+        </Scene>
       </Router>
     );
   }

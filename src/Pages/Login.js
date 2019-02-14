@@ -7,12 +7,10 @@ import { Col, Row, Grid } from 'react-native-easy-grid'
 import HeaderComponent from '../Components/Header'
 import { Actions } from 'react-native-router-flux'
 
-type Props = {};
-
 const BackgourndImg = styled(ImageBackground)`
     width:100%;
     height: 100%;
-    backgroundColor: #000000;
+    backgroundColor: #182433;
     justifyContent:center;
     alignItems:center;
 `
@@ -29,12 +27,19 @@ const LogoContainer = styled.View`
     alignItems: center;
     justifyContent: center;
 `
-const LogoImage = styled.Image`
+const Logo = styled.Text`
+    color: #FFFFFF;
+    fontSize: 75;
     marginTop: 120;
     marginBottom: 120;
-    width: 280;
-    height: 70;
-    justifyContent: center;
+    fontFamily: "BMJUA_ttf";
+`
+const SignUpLogo = styled.Text`
+    color: #FFFFFF;
+    fontSize: 75;
+    marginTop: 120;
+    marginBottom: 36;
+    fontFamily: "BMJUA_ttf";
 `
 const InputWrapper = styled(Item)`
     marginTop: 10;
@@ -62,12 +67,57 @@ const LoginText = styled(H3)`
     fontSize: 18;
     textAlign:center;
 `
-const ToSignUpText = styled.Text`
+const SignUpBtn = styled.Text`
     color: #FFFFFF;
     marginTop: 10;
     textDecorationLine: underline;
 `
+const ToLoginBtn =  styled(Button)`
+    background:#FFFFFF;
+    width:80%;
+    marginTop: 50;
+    marginLeft: 10%;
+    marginRight: 10%;
+    borderRadius: 50;
+`
+const ToLoginText = styled(H3)`
+    color : #4586C6;
+    width:100%;
+    fontSize: 18;
+    textAlign:center;
+`
+const ToSignUpBtn =  styled(Button)`
+    background:#4586C6;
+    width:80%;
+    marginTop: 10;
+    marginLeft: 10%;
+    marginRight: 10%;
+    borderRadius: 50;
+`
+const ToSignUpText = styled(H3)`
+    color : #FFFFFF;
+    width:100%;
+    fontSize: 18;
+    textAlign:center;
+`
+
+type Props = {};
+
 export default class Login extends Component<Props> {
+    constructor(props: Props) { 
+        super(props); 
+        this.state = { 
+            email: null,
+            password: null,
+            toggleLogin: true,
+        }
+        this.toggleLogin = this.toggleLogin.bind(this)
+    } 
+    toggleLogin(){
+        this.setState({
+            toggleLogin: !this.state.toggleLogin
+        })
+    }
     render() {
         return (
             <Container>
@@ -79,19 +129,47 @@ export default class Login extends Component<Props> {
                             </CloseBtn>
                         </Row>
                     </Grid>
-                    <LogoContainer>
-                        <LogoImage source={require('../Images/logo.png')}/>
-                        <InputWrapper rounded>
-                            <InputBox returnKeyType='next' placeholder='이메일'/>
-                        </InputWrapper>
-                        <InputWrapper rounded>
-                            <InputBox secureTextEntry placeholder='비밀번호'/>
-                        </InputWrapper>
-                        <LoginBtn transparent onPress={this.kakaoLogin}>
-                            <LoginText>로그인 하기</LoginText>
-                        </LoginBtn>
-                        <ToSignUpText>아직 무비너스 회원이 아니신가요?</ToSignUpText>
-                    </LogoContainer>
+                    
+                        {
+                            this.state.toggleLogin
+                            ? (
+                                <LogoContainer>
+                                    <Logo>무비너스</Logo>
+                                    <InputWrapper rounded>
+                                        <InputBox returnKeyType='next' placeholder='이메일'/>
+                                    </InputWrapper>
+                                    <InputWrapper rounded>
+                                        <InputBox secureTextEntry placeholder='비밀번호'/>
+                                    </InputWrapper>
+                                    <LoginBtn transparent onPress={this.kakaoLogin}>
+                                        <LoginText>로그인</LoginText>
+                                    </LoginBtn>
+                                    <SignUpBtn onPress={this.toggleLogin}>아직 무비너스 회원이 아니신가요?</SignUpBtn>
+                                </LogoContainer>
+                            )
+                            : (
+                                <LogoContainer>
+                                    <SignUpLogo>무비너스</SignUpLogo>
+                                    <InputWrapper rounded>
+                                        <InputBox returnKeyType='next' placeholder='이메일'/>
+                                    </InputWrapper>
+                                    <InputWrapper rounded>
+                                        <InputBox secureTextEntry placeholder='비밀번호'/>
+                                    </InputWrapper>
+                                    <InputWrapper rounded>
+                                        <InputBox secureTextEntry placeholder='비밀번호 확인'/>
+                                    </InputWrapper>
+                                    <ToLoginBtn transparent onPress={this.toggleLogin}>
+                                        <ToLoginText>로그인 하러가기</ToLoginText>
+                                    </ToLoginBtn>
+                                    <ToSignUpBtn transparent onPress={this.kakaoLogin}>
+                                        <ToSignUpText>회원가입</ToSignUpText>
+                                    </ToSignUpBtn>
+                                </LogoContainer>
+                            )
+                        }
+                        
+                        
                 </BackgourndImg>
             </Container>
         )

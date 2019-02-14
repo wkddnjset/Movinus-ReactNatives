@@ -5,12 +5,12 @@ export default class HeaderComponent extends Component {
   
   render() {
     return (
-      <Header androidStatusBarColor="#000" style={{backgroundColor:'#FFF'}} noShadow>
+      <Header androidStatusBarColor="#000" style={{backgroundColor:this.props.navColor}} noShadow>
         <Left style={{flex:1}}>
           {this.props.navBarLeft}
         </Left>
-        <Body style={{flex:2}}>
-          <Title style={{color:"#000", alignSelf:'center'}}>{this.props.navTitle}</Title>
+        <Body style={{flex:2, alignSelf:'center'}}>
+          {this.props.navTitle}
         </Body>
         <Right style={{flex:1}}>
           {this.props.navBarRight}

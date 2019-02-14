@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
 import {AsyncStorage, Text, View} from 'react-native'
 import styled from 'styled-components/native'
-import { Icon, Button }  from 'native-base'
+import { Icon, Button, H3 }  from 'native-base'
 import { Actions } from 'react-native-router-flux'
 // Components
 import HeaderComponent from './Header'
 
 type Props = {};
 
-const LogoImage = styled.Image`
-    width: 65;
-    height: 17;
+const Logo = styled(H3)`
+    color: #FFF;
+    alignSelf: center;
+    fontSize: 23;
+    fontFamily: BMJUA_ttf;
 `
-
 export default class DrawerHeaderComponent extends Component<Props> {
     openDrawer(){
         Actions.drawerOpen()
@@ -44,15 +45,16 @@ export default class DrawerHeaderComponent extends Component<Props> {
     render() {
         return (
             <HeaderComponent
+                navColor="#182433"
                 navBarLeft={(
                     <Button transparent onPress={this.openDrawer}>
-                        <Icon type="EvilIcons" name="navicon" style={{color:"#000", fontSize:30}}/>
+                        <Icon type="EvilIcons" name="navicon" style={{color:"#FFF", fontSize:30}}/>
                     </Button>
                 )}
-                navTitle={(<LogoImage source={require('../Images/logo.png')}/>)}
+                navTitle={(<Logo onPress={Actions.home}>무비너스</Logo>)}
                 navBarRight={(
                     <Button transparent onPress={this.openUser}>
-                        <Icon type="EvilIcons" name="user" style={{color:"#000", fontSize:35}}/>
+                        <Icon type="EvilIcons" name="user" style={{color:"#FFF", fontSize:35}}/>
                     </Button>
                 )}
             />
