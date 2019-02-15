@@ -1,0 +1,4 @@
++ react-dom@16.8.2
+added 2 packages and audited 103531 packages in 14.059s
+found 1 moderate severity vulnerability
+  run `npm audit fix` to fix them, or `npm audit` for details
