@@ -13,7 +13,7 @@ const CarouselTitle = styled(Text)`
     fontSize: 25;
     fontWeight: 800;
     marginLeft: 15;
-    marginTop: 25;
+    marginTop: 20;
     color: #182433;
 `
 
