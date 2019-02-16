@@ -26,6 +26,14 @@ export default class SideMenuComponent extends Component {
         <Content>
           <ListItem icon onPress={Actions.my_list}>
             <Left>
+              <Icon active name="home"/>
+            </Left>
+            <Body>
+              <SideText>홈</SideText>
+            </Body>
+          </ListItem>
+          <ListItem icon onPress={Actions.my_list}>
+            <Left>
               <Icon active name="list"/>
             </Left>
             <Body>
