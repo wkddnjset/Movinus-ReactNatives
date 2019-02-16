@@ -13,7 +13,7 @@ const CarouselTitle = styled(Text)`
     fontSize: 25;
     fontWeight: 800;
     marginLeft: 15;
-    marginTop: 20;
+    marginTop: 25;
     color: #182433;
 `
 
@@ -29,6 +29,7 @@ export default class Home extends Component<Props> {
                     <CarouselComponent/>
                     <CarouselTitle>액션</CarouselTitle>
                     <CarouselComponent/>
+                    <CarouselTitle>드라마</CarouselTitle>
                     <CarouselComponent/>
                 </Content>
             </Container>
