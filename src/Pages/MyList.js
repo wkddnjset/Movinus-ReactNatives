@@ -27,7 +27,10 @@ export default class MyList extends Component<Props> {
         super(props)
 
         this.state = {
-            selected: "key0",
+            loading: false,
+            data: [],
+            current_page: 1,
+            hasMore: true
         }
     }
     onValueChange(value){
@@ -58,7 +61,7 @@ export default class MyList extends Component<Props> {
                     <Input placeholder='검색어를 입력해주세요'/>
                     <Icon active name='search' />
                 </SearchBar>
-                <GalleryItemComponent/>
+                <GalleryItemComponent data={this.state.data}/>
             </Container>
         )
     }

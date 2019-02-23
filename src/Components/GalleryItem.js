@@ -3,6 +3,9 @@ import { TouchableOpacity, View, Text, Image, Dimensions } from 'react-native'
 import { Rating } from 'react-native-ratings'
 import { FlatGrid } from 'react-native-super-grid'
 import styled from 'styled-components/native'
+import { Icon } from 'native-base';
+
+import ReadyToSearchComponent from '../Components/ReadyToSearch'
 
 const ReviewTitle = styled(Text)`
     marginTop: 5;
@@ -99,16 +102,23 @@ export default class GalleryItemComponent extends Component {
         )
     }
     render() {
-        return (
-            <FlatGrid
-                itemDimension={130}
-                items={this.state.entries}
-                style={{ flex:1 }}
-                // staticDimension={300}
-                // fixed
-                spacing={10}
-                renderItem={this._renderItem}
-            />
-        )
+        if(this.props.data.length == 0){
+            return (
+                <ReadyToSearchComponent/>
+            )
+        }
+        else {
+            return (
+                <FlatGrid
+                    itemDimension={130}
+                    items={this.props.data}
+                    style={{ flex:1 }}
+                    // staticDimension={300}
+                    // fixed
+                    spacing={10}
+                    renderItem={this._renderItem}
+                />
+            )
+        }
     }
 }

@@ -7,6 +7,7 @@ import { Actions } from 'react-native-router-flux'
 // Components
 import DrawerHeaderComponent from '../Components/DrawerHeader'
 import SearchItemComponent from '../Components/SearchItem'
+import ReadyToSearchComponent from '../Components/ReadyToSearch'
 
 type Props = {};
 
