@@ -4,6 +4,7 @@ import { Text, View} from 'react-native'
 import { ListItem, Thumbnail }  from 'native-base'
 import styled from 'styled-components/native'
 import { Col, Row, Grid } from 'react-native-easy-grid'
+import { Actions } from 'react-native-router-flux'
 
 const MovieThumbnail = styled(Thumbnail)`
     width:100;
@@ -27,9 +28,12 @@ const DescriptionText = styled.Text`
     marginTop: 10;
 `
 export default class SearchItemComponent extends Component<Props> {
+    toDetail(){
+        Actions.detail()
+    }
     render() {
         return (
-            <ListItem Thumbnail>
+            <ListItem Thumbnail onPress={this.toDetail}>
                 <Grid>
                     <Row>
                         <Col style={{flex:1}}>

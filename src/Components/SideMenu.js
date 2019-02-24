@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Container, Button, Icon, Content, ListItem, Left, Body, Right, Switch } from 'native-base'
 import styled from 'styled-components/native'
-import { Text } from 'react-native'
+import { Text, AsyncStorage } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import HeaderComponent from './Header'
+//Contexts
+import { AccountConsumer } from '../Contexts/Account'
 
 const SideText = styled.Text`
   fontSize: 18;
@@ -12,6 +14,16 @@ const SideText = styled.Text`
 export default class SideMenuComponent extends Component {
   closeDrawer(){
     Actions.drawerClose()
+  }
+  toMyList(){
+    AsyncStorage.getItem('token', (err, result) => {
+      if (result == null) {
+        Actions.login()
+      }
+      else {
+        Actions.my_list()
+      }
+    })
   }
   render() {
     return (
@@ -32,7 +44,7 @@ export default class SideMenuComponent extends Component {
               <SideText>홈</SideText>
             </Body>
           </ListItem>
-          <ListItem icon onPress={Actions.my_list}>
+          <ListItem icon onPress={ this.toMyList }>
             <Left>
               <Icon active name="list"/>
             </Left>

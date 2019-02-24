@@ -7,6 +7,8 @@ import { Actions } from 'react-native-router-flux'
 import DrawerHeaderComponent from '../Components/DrawerHeader'
 import HeaderComponent from '../Components/Header'
 import GalleryItemComponent from '../Components/GalleryItem'
+// Contexts
+import { SeacrhProvider, SeacrhConsumer } from '../Contexts/Search'
 
 type Props = {};
 
@@ -42,26 +44,29 @@ export default class MyList extends Component<Props> {
         return (
             <Container>
                 <DrawerHeaderComponent/>
-                {/* <HeaderComponent
-                navColor="#FFFFFF"
-                navBarLeft={(
-                    <Button transparent onPress={this.openUser}>
-                        <Icon type="MaterialCommunityIcons" name="filter-outline" style={{color:"#182433", fontSize:30}}/>
-                        <MyListBtn>필터</MyListBtn>
-                    </Button>
-                )}
-                navBarRight={(
-                    <Button transparent onPress={this.openUser}>
-                        <MyListBtn>정렬</MyListBtn>
-                        <Icon type="MaterialCommunityIcons" name="sort-descending" style={{color:"#182433", fontSize:30}}/>
-                    </Button>
-                )}
-                /> */}
-                <SearchBar>
-                    <Input placeholder='검색어를 입력해주세요'/>
-                    <Icon active name='search' />
-                </SearchBar>
-                <GalleryItemComponent data={this.state.data}/>
+                <SeacrhProvider>
+                    {/* <SeacrhConsumer>
+                        {
+                            (SeacrhContext) => (
+                                <SearchBar>
+                                    <Input 
+                                        placeholder='검색어를 입력해주세요' 
+                                        onChangeText={(text) => SeacrhContext.actions.search(text)}/>
+                                    <Icon active name='search'/>
+                                </SearchBar>
+                            )
+                        }
+                    </SeacrhConsumer> */}
+                    <SeacrhConsumer>
+                        {
+                            (SeacrhContext) => (
+                                <GalleryItemComponent 
+                                    data={SeacrhContext.state.data}
+                                    status={SeacrhContext.state.status}/>
+                            )
+                        }
+                    </SeacrhConsumer>
+                </SeacrhProvider>
             </Container>
         )
     }

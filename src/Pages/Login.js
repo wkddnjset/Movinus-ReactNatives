@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Text, View, ImageBackground, Image } from 'react-native'
+import { Text, View, ImageBackground, Image, AsyncStorage } from 'react-native'
 import styled from 'styled-components/native'
 import { Container, Icon, Button, H3, Item, Input } from 'native-base'
 import { Col, Row, Grid } from 'react-native-easy-grid'
@@ -17,7 +17,7 @@ const BackgourndImg = styled(ImageBackground)`
 const CloseBtn =  styled(Button)`
     justifyContent:flex-end;
 `
-const CancleIcon =  styled(Icon)`
+const CloseIcon =  styled(Icon)`
     margin:20px;
     fontSize:30;
     color: #FFFFFF;
@@ -112,11 +112,44 @@ export default class Login extends Component<Props> {
             toggleLogin: true,
         }
         this.toggleLogin = this.toggleLogin.bind(this)
-    } 
+    }
+    onChange(){
+
+    }
     toggleLogin(){
         this.setState({
             toggleLogin: !this.state.toggleLogin
         })
+    }
+    signIn(){
+        // 로그인 API -> JWT 토큰!
+        
+        // 로그인 성공시
+        AsyncStorage.setItem('token', "test-token")
+        Actions.home({ isLogined : true })
+        // 로그인 실패시
+        // Alert.alert(
+        //     '일림',
+        //     '로그인에 실패했습니다.',
+        //     [
+        //         {text: '확인', onPress: () => console.log("확인")},
+        //     ]
+        // )
+    }
+    signUp(){
+        // 비밀번호 Validation
+        // 회원가입 API -> JWT 토큰!
+        // 회원가입 성공시
+        AsyncStorage.setItem('token', "test-token")
+        Actions.home({ isLogined : true })
+        // 회원가입 실패시
+        // Alert.alert(
+        //     '일림',
+        //     '로그인에 실패했습니다.',
+        //     [
+        //         {text: '확인', onPress: () => console.log("확인")},
+        //     ]
+        // )
     }
     render() {
         return (
@@ -125,7 +158,7 @@ export default class Login extends Component<Props> {
                     <Grid>
                         <Row style={{justifyContent:"flex-end", width:"100%", height: 50}}>
                             <CloseBtn transparent onPress={Actions.pop}>
-                                <CancleIcon name="close"/>
+                                <CloseIcon name="close"/>
                             </CloseBtn>
                         </Row>
                     </Grid>
@@ -141,7 +174,7 @@ export default class Login extends Component<Props> {
                                     <InputWrapper rounded>
                                         <InputBox secureTextEntry placeholder='비밀번호'/>
                                     </InputWrapper>
-                                    <LoginBtn transparent onPress={this.kakaoLogin}>
+                                    <LoginBtn transparent onPress={this.signIn}>
                                         <LoginText>로그인</LoginText>
                                     </LoginBtn>
                                     <SignUpBtn onPress={this.toggleLogin}>아직 무비너스 회원이 아니신가요?</SignUpBtn>
@@ -154,7 +187,7 @@ export default class Login extends Component<Props> {
                                         <InputBox returnKeyType='next' placeholder='이메일'/>
                                     </InputWrapper>
                                     <InputWrapper rounded>
-                                        <InputBox secureTextEntry placeholder='비밀번호'/>
+                                        <InputBox returnKeyType='next' secureTextEntry placeholder='비밀번호'/>
                                     </InputWrapper>
                                     <InputWrapper rounded>
                                         <InputBox secureTextEntry placeholder='비밀번호 확인'/>
@@ -168,8 +201,6 @@ export default class Login extends Component<Props> {
                                 </LogoContainer>
                             )
                         }
-                        
-                        
                 </BackgourndImg>
             </Container>
         )

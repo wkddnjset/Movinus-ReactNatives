@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {AsyncStorage, Text, View} from 'react-native'
+import { AsyncStorage, Text, View, Alert } from 'react-native'
 import styled from 'styled-components/native'
-import { Icon, Button, H3 }  from 'native-base'
+import { Icon, Button, H3, Toast }  from 'native-base'
 import { Actions } from 'react-native-router-flux'
 // Components
 import HeaderComponent from './Header'
@@ -15,6 +15,13 @@ const Logo = styled(H3)`
     fontFamily: BMJUA_ttf;
 `
 export default class DrawerHeaderComponent extends Component<Props> {
+    constructor(props: Props) { 
+        super(props); 
+        this.state = { 
+            isLogined: this.props.isLogined,
+        }
+        this.openDrawer = this.openDrawer.bind(this)
+    }
     openDrawer(){
         Actions.drawerOpen()
     }
@@ -34,7 +41,10 @@ export default class DrawerHeaderComponent extends Component<Props> {
                             Toast.show({
                                 text: '로그아웃 되었습니다!',
                                 textStyle : { fontWeight: "bold" },
-                                type: "warning"
+                                type: "success",
+                                style: {
+                                    backgroundColor: "#4586C6"
+                                }
                             })
                         }},
                     ]

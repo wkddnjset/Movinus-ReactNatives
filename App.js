@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Platform, StyleSheet, Text, View} from 'react-native'
+import { Root }  from 'native-base'
 import { Scene, Router, Actions, ActionConst, Overlay, Tabs, Modal, Drawer, Stack, Lightbox } from 'react-native-router-flux'
 import SplashScreen from 'react-native-splash-screen'
 // Pages
@@ -8,6 +9,7 @@ import MyList from './src/Pages/MyList'
 import Search from './src/Pages/Search'
 import Login from './src/Pages/Login'
 import Detail from './src/Pages/Detail'
+import DetailMy from './src/Pages/DetailMy'
 // Components
 import SideMenuComponent from './src/Components/SideMenu'
 import DrawerHeaderComponent from './src/Components/DrawerHeader'
@@ -19,7 +21,8 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-type Props = {};
+type Props = {}
+
 export default class App extends Component<Props> {
   componentDidMount() {
       SplashScreen.show()
@@ -27,25 +30,28 @@ export default class App extends Component<Props> {
   }
   render() {
     return (
-      <Router>
-        <Scene key="root">
-          <Scene 
-            key="drawer" 
-            drawer={true}
-            contentComponent={SideMenuComponent}
-            drawerWidth={280}
-            drawerPosition="left"
-            hideNavBar>
-            <Scene key="main"> 
-              <Scene key="home" component={Home} type='replace' hideNavBar/>
-              <Scene key="my_list" component={MyList} type='replace' hideNavBar/>
-              <Scene key="search" component={Search} type='replace' hideNavBar/>
+      <Root>
+        <Router>
+          <Scene key="root">
+            <Scene 
+              key="drawer" 
+              drawer={true}
+              contentComponent={SideMenuComponent}
+              drawerWidth={280}
+              drawerPosition="left"
+              hideNavBar>
+              <Scene key="main"> 
+                <Scene key="home" component={Home} type='replace' hideNavBar/>
+                <Scene key="my_list" component={MyList} type='replace' hideNavBar/>
+                <Scene key="search" component={Search} type='replace' hideNavBar/>
+              </Scene>
             </Scene>
+            <Scene key="detail" component={Detail} hideNavBar/>
+            <Scene key="detail_my" component={DetailMy} hideNavBar/>
+            <Scene key="login" component={Login} hideNavBar/>
           </Scene>
-          <Scene key="login" component={Login} hideNavBar/>
-          <Scene key="detail" component={Detail} hideNavBar/>
-        </Scene>
-      </Router>
+        </Router>
+      </Root>
     );
   }
 }

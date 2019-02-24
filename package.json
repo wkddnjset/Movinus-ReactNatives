@@ -12,10 +12,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "native-base": "^2.11.0",
     "react": "16.6.3",
     "react-dom": "^16.8.2",
     "react-native": "0.58.4",
+    "react-native-action-button": "^2.8.5",
+    "react-native-loading-spinner-overlay": "^1.0.1",
     "react-native-ratings": "^6.3.0",
     "react-native-router-flux": "^4.0.6",
     "react-native-snap-carousel": "^3.7.5",

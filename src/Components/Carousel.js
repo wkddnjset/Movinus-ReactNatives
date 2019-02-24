@@ -8,6 +8,10 @@ import { Actions } from 'react-native-router-flux';
 
 const MovieTitle = styled(Text)`
     fontSize: 19;
+    fontWeight: 600;
+`
+const MovieInfo = styled(Text)`
+    fontSize: 13;
 `
 const RatingView = styled.View`
     flexDirection: row;
@@ -34,34 +38,12 @@ const SearchText = styled.Text`
     color:#555555;
 `
 
-export default class MyCarousel extends Component {
+export default class CarouselComponent extends Component {
     constructor (props) {
         super(props)
 
         this.state = {
             windowWidth: Dimensions.get('window').width,
-            entries: [
-                {
-                    title: "뺑반1",
-                    thumbnail: "http://img.cgv.co.kr/Movie/Thumbnail/Poster/000081/81561/81561_1000.jpg",
-                    rate: 7.2
-                },
-                {
-                    title: "뺑반2",
-                    thumbnail: "http://img.cgv.co.kr/Movie/Thumbnail/Poster/000081/81561/81561_1000.jpg",
-                    rate: 7.2                
-                },
-                {
-                    title: "뺑반3",
-                    thumbnail: "http://img.cgv.co.kr/Movie/Thumbnail/Poster/000081/81561/81561_1000.jpg",
-                    rate: 7.2                
-                },
-                {
-                    title: "뺑반4",
-                    thumbnail: "http://img.cgv.co.kr/Movie/Thumbnail/Poster/000081/81561/81561_1000.jpg",
-                    rate: 7.2                
-                },
-            ],
             search: {
                     title: "검색하기",
                 }
@@ -69,13 +51,17 @@ export default class MyCarousel extends Component {
         }
         this._renderItem = this._renderItem.bind(this)
     }
+    toDetail(id){
+        console.log(id)
+        Actions.detail({id : id})
+    }
     toSearch(){
         console.log("Search")
     }
     _renderItem ({item, index}) {
         if (item.title != "검색하기"){
             return (
-                <TouchableOpacity onPress={() => {console.log("dd")}}>
+                <TouchableOpacity key={index} onPress={() => this.toDetail(item.id)}>
                     <Image
                         source={{ uri: item.thumbnail }}
                         style={{ width: 145, height:230, borderRadius:8 }}
@@ -93,6 +79,18 @@ export default class MyCarousel extends Component {
                     <MovieTitle numberOfLines={1}>
                         { item.title }
                     </MovieTitle>
+                    <MovieInfo>
+                        {
+                            item.genres.map((genre, index) => {
+                                if(item.genres.length === index + 1){
+                                    return <Text key={index}>{genre}</Text>
+                                }
+                                else{
+                                    return <Text key={index}>{genre}, </Text>
+                                }
+                            })
+                        }
+                    </MovieInfo>
                 </TouchableOpacity>
             )
         }
@@ -109,8 +107,15 @@ export default class MyCarousel extends Component {
     }
 
     render () {
-        const dataList = this.state.entries
-        dataList.push(this.state.search)
+        var dataList = []
+        if (this.props.data==undefined){
+            dataList = []
+        }
+        else{
+            dataList = []
+            dataList = this.props.data
+            dataList.push(this.state.search)
+        }
         return (
             <Carousel
                 slideStyle={{ marginTop:20, paddingLeft:15 }}

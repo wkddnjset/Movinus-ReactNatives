@@ -5,11 +5,14 @@ import { FlatGrid } from 'react-native-super-grid'
 import styled from 'styled-components/native'
 import { Icon } from 'native-base';
 
+// Conponents
 import ReadyToSearchComponent from '../Components/ReadyToSearch'
+import { Actions } from 'react-native-router-flux';
 
 const ReviewTitle = styled(Text)`
-    marginTop: 5;
-    fontSize: 19;
+    fontWeight: 600;
+    marginTop: 10;
+    fontSize: 18;
 `
 const ReviewText = styled(Text)`
     marginTop: 5;
@@ -17,11 +20,11 @@ const ReviewText = styled(Text)`
     fontSize: 14;
 `
 const RatingView = styled.View`
+    marginTop: 10;
     flexDirection: row;
     alignItems: center;
 `
 const RateText = styled.Text`
-    marginLeft: 5;
     fontSize:15;
     color:#555555;
 `
@@ -33,9 +36,9 @@ export default class GalleryItemComponent extends Component {
         this.state = {
             windowWidth: Dimensions.get('window').width,
             windowHeight: Dimensions.get('window').height,
-            entries: [
+            data:[
                 {
-                    title: "뺑반1",
+                    title: "뺑반1뺑반1뺑반1뺑반1뺑반1뺑반1뺑반1",
                     thumbnail: "http://img.cgv.co.kr/Movie/Thumbnail/Poster/000081/81561/81561_1000.jpg",
                     rate: 7.2,
                     text: "세상에서 제일 재미없는 이야기 뺑반, 이 이상의 노잼은 없다. 다신 보지말아야겠어"
@@ -74,9 +77,12 @@ export default class GalleryItemComponent extends Component {
         }
         this._renderItem = this._renderItem.bind(this)
     }
+    toDetail(){
+        Actions.detail_my()
+    }
     _renderItem ({item, index}) {
         return (
-            <TouchableOpacity onPress={() => {console.log("dd")}}>
+            <TouchableOpacity onPress={this.toDetail}>
                 <Image
                     source={{ uri: item.thumbnail }}
                     style={{ width: (this.state.windowWidth/2)-20, height:this.state.windowHeight/2.5, borderRadius:8 }}
@@ -85,6 +91,7 @@ export default class GalleryItemComponent extends Component {
                     { item.title }
                 </ReviewTitle>
                 <RatingView>
+                    <RateText>내 평점  </RateText>
                     <Rating
                         readonly
                         ratingCount={5}
@@ -92,33 +99,52 @@ export default class GalleryItemComponent extends Component {
                         imageSize={17}
                         style={{ alignItems:"flex-start" }}
                     />
-                    <RateText>{item.rate}</RateText>
+                    <RateText>  {item.rate}</RateText>
                 </RatingView>
                 <ReviewText numberOfLines={2}>
                     { item.text }
                 </ReviewText>
-                
             </TouchableOpacity>
         )
     }
-    render() {
-        if(this.props.data.length == 0){
-            return (
-                <ReadyToSearchComponent/>
-            )
-        }
-        else {
-            return (
-                <FlatGrid
-                    itemDimension={130}
-                    items={this.props.data}
-                    style={{ flex:1 }}
-                    // staticDimension={300}
-                    // fixed
-                    spacing={10}
-                    renderItem={this._renderItem}
-                />
-            )
-        }
+    render(){
+        return(
+            <FlatGrid
+                itemDimension={130}
+                items={this.state.data}
+                style={{ flex:1 }}
+                spacing={10}
+                renderItem={this._renderItem} 
+            />
+        )
     }
+    // render() {
+    //     if(this.props.status == null){
+    //         return(
+    //             <FlatGrid
+    //                 itemDimension={130}
+    //                 items={this.state.data}
+    //                 style={{ flex:1 }}
+    //                 spacing={10}
+    //                 renderItem={this._renderItem} 
+    //             />
+    //         )
+    //     }
+    //     else if (this.props.status == "Error"){
+    //         return (
+    //             <ReadyToSearchComponent/>
+    //         )
+    //     }
+    //     else {
+    //         return (
+    //             <FlatGrid
+    //                 itemDimension={130}
+    //                 items={this.props.data}
+    //                 style={{ flex:1 }}
+    //                 spacing={10}
+    //                 renderItem={this._renderItem} 
+    //             />
+    //         )
+    //     }
+    // }
 }
