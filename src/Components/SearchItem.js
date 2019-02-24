@@ -28,12 +28,12 @@ const DescriptionText = styled.Text`
     marginTop: 10;
 `
 export default class SearchItemComponent extends Component<Props> {
-    toDetail(){
-        Actions.detail()
+    toDetail(id){
+        Actions.detail({id:id})
     }
     render() {
         return (
-            <ListItem Thumbnail onPress={this.toDetail}>
+            <ListItem Thumbnail onPress={() => this.toDetail(this.props.id)}>
                 <Grid>
                     <Row>
                         <Col style={{flex:1}}>

@@ -5,6 +5,8 @@ import { Rating } from 'react-native-ratings'
 import styled from 'styled-components/native'
 import { Col, Row, Grid } from 'react-native-easy-grid'
 import ActionButton from 'react-native-action-button'
+import Spinner from 'react-native-loading-spinner-overlay'
+
 // Components
 import HeaderComponent from '../Components/Header'
 import SearchItemComponent from '../Components/SearchItem'
@@ -58,34 +60,29 @@ export default class Detail extends Component<Props> {
             }
         }
     }
-    componentWillMount() {
+    componentDidMount() {
         this.setState({
             loading: true
         })
-    }
-    componentDidMount() {
-        // axios.get(`https://api.themoviedb.org/3/movie/${this.props.id}?api_key=d1bad0612955f9a34614bc14dda70291&language=ko-KR`)
-        //     .then(res => {
-        //         console.log(res.data)
-        //         const data = {
-        //             id: res.data.id,
-        //             title: res.data.title,
-        //             subTitle: res.data.original_title,
-        //             rate: res.data.vote_average,
-        //             genres: res.data.genres,
-        //             openDt: res.data.release_date,
-        //             prdtYear: res.data.release_date.slice(0, 4),
-        //             showTm: res.data.runtime,
-        //             nations: [],
-        //             thumbnail: "https://image.tmdb.org/t/p/w500" + res.data.poster_path
-        //         }
-        //         setInterval(() => {
-        //             this.setState({
-        //                 data: data,
-        //                 loading: false
-        //             });
-        //         }, 100);
-        // })
+        axios.get(`https://api.themoviedb.org/3/movie/${this.props.id}?api_key=d1bad0612955f9a34614bc14dda70291&language=ko-KR`)
+            .then(res => {
+                const data = {
+                    id: res.data.id,
+                    title: res.data.title,
+                    subTitle: res.data.original_title,
+                    rate: res.data.vote_average,
+                    genres: res.data.genres,
+                    openDt: res.data.release_date,
+                    prdtYear: res.data.release_date.slice(0, 4),
+                    showTm: res.data.runtime,
+                    nations: [],
+                    thumbnail: "https://image.tmdb.org/t/p/w500" + res.data.poster_path
+                }
+                this.setState({
+                    data: data,
+                    loading: false
+                });
+        })
     }
     render() {
         return (
@@ -98,6 +95,11 @@ export default class Detail extends Component<Props> {
                             <Icon name="arrow-back" style={{color:"#FFF", fontSize:30}}/>
                         </Button>
                     )}
+                    />
+                    <Spinner
+                        visible={this.state.loading}
+                        textContent={'로딩중...'}
+                        textStyle={{color:"#FFF"}}
                     />
                     {
                         this.state.loading

@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import { AsyncStorage } from 'react-native'
+// Utils
+import { getGenre } from '../Utils/Genre'
 
 const SeacrhContext  = React.createContext({});
 
@@ -10,35 +13,12 @@ export class SeacrhProvider extends Component {
         searchText: null,
         resultText: "검색어를 입력해주세요.",
         status : null,
-        data: [
-            {
-                title : "뺑반1",
-                thumbnail : "http://img.cgv.co.kr/Movie/Thumbnail/Poster/000081/81561/81561_1000.jpg",
-                rate : 7.2,
-                description : `경찰 내 최고 엘리트 조직 내사과 소속 경위 ‘은시연’(공효진). 조직에서 유일하게 믿고 따르는 ‘윤과장’(염정아)과 함께 F1 레이서 출신의 사업가 ‘정재철’(조정석)을 잡기 위해 수사망을 조여가던 시연은 무리한 강압 수사를 벌였다는 오명을 쓰고 뺑소니 전담반으로 좌천된다.`
-            },
-            {
-                title : "뺑반2",
-                thumbnail : "http://img.cgv.co.kr/Movie/Thumbnail/Poster/000081/81561/81561_1000.jpg",
-                rate : 7.2,
-                description : `경찰 내 최고 엘리트 조직 내사과 소속 경위 ‘은시연’(공효진). 조직에서 유일하게 믿고 따르는 ‘윤과장’(염정아)과 함께 F1 레이서 출신의 사업가 ‘정재철’(조정석)을 잡기 위해 수사망을 조여가던 시연은 무리한 강압 수사를 벌였다는 오명을 쓰고 뺑소니 전담반으로 좌천된다.`
-            },
-            {
-                title : "뺑반3",
-                thumbnail : "http://img.cgv.co.kr/Movie/Thumbnail/Poster/000081/81561/81561_1000.jpg",
-                rate : 7.2,
-                description : `경찰 내 최고 엘리트 조직 내사과 소속 경위 ‘은시연’(공효진). 조직에서 유일하게 믿고 따르는 ‘윤과장’(염정아)과 함께 F1 레이서 출신의 사업가 ‘정재철’(조정석)을 잡기 위해 수사망을 조여가던 시연은 무리한 강압 수사를 벌였다는 오명을 쓰고 뺑소니 전담반으로 좌천된다.`
-            },
-            {
-                title : "뺑반4",
-                thumbnail : "http://img.cgv.co.kr/Movie/Thumbnail/Poster/000081/81561/81561_1000.jpg",
-                rate : 7.2,
-                description : `경찰 내 최고 엘리트 조직 내사과 소속 경위 ‘은시연’(공효진). 조직에서 유일하게 믿고 따르는 ‘윤과장’(염정아)과 함께 F1 레이서 출신의 사업가 ‘정재철’(조정석)을 잡기 위해 수사망을 조여가던 시연은 무리한 강압 수사를 벌였다는 오명을 쓰고 뺑소니 전담반으로 좌천된다.`
-            },
-        ]
+        data: [{
+            genres:[]
+        }]
     }
     actions = {
-        search: (text) => { 
+        search: (text, page) => { 
             // Search API
             if(text == ""){
                 this.setState({
@@ -46,8 +26,37 @@ export class SeacrhProvider extends Component {
                 })
             }
             else{
-                this.setState({
-                    status: "Error"
+                axios.get(`https://api.themoviedb.org/3/search/movie?api_key=d1bad0612955f9a34614bc14dda70291&language=ko-KR&query=${text}&page=${page}&include_adult=true`)
+                    .then(res => {
+                        if (res.data.results.length == 0){
+                            this.setState({
+                                status: "Error"
+                            })
+                        }
+                        else{
+                            var dataList = []
+                            const results = res.data.results
+                            for (var result of results){
+                                var genreList = []
+                                for (var genre_id of result.genre_ids.slice(0, 3)){
+                                    genreList.push(getGenre(genre_id))
+                                }
+                                var data = {
+                                    id: result.id,
+                                    title: result.title,
+                                    rate: result.vote_average,
+                                    genres: genreList,
+                                    nations: [],
+                                    thumbnail: "https://image.tmdb.org/t/p/w500" + result.poster_path,
+                                    description: result.overview
+                                }
+                                dataList.push(data)
+                            }
+                            this.setState({
+                                status: "Success",
+                                data: dataList
+                            })
+                        }
                 })
             }
         },

@@ -18,6 +18,7 @@ export default class SearchListComponent extends Component<Props> {
                             this.props.data.map((data, index) => (
                                 <SearchItemComponent
                                     key={index}
+                                    id={data.id}
                                     title={data.title}
                                     thumbnail={data.thumbnail}
                                     rate={data.rate}
@@ -29,11 +30,21 @@ export default class SearchListComponent extends Component<Props> {
                 </Content>
             )
         }
-        else{
+        else if(this.props.status == "Error"){
             return(
-                <ReadyToSearchComponent/>
+                <ReadyToSearchComponent
+                    icon="frowno"
+                    text="검색결과를 찾을 수 없습니다."
+                />
             )
         }
-        
+        else{
+            return(
+                <ReadyToSearchComponent
+                    icon="smileo"
+                    text="검색어를 입력해주세요."
+                />
+            )
+        }
     }
 }

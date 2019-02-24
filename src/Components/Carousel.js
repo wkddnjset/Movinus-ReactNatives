@@ -41,19 +41,13 @@ const SearchText = styled.Text`
 export default class CarouselComponent extends Component {
     constructor (props) {
         super(props)
-
         this.state = {
             windowWidth: Dimensions.get('window').width,
-            search: {
-                    title: "검색하기",
-                }
-
         }
         this._renderItem = this._renderItem.bind(this)
     }
     toDetail(id){
-        console.log(id)
-        Actions.detail({id : id})
+         Actions.detail({id : id})
     }
     toSearch(){
         console.log("Search")
@@ -107,19 +101,10 @@ export default class CarouselComponent extends Component {
     }
 
     render () {
-        var dataList = []
-        if (this.props.data==undefined){
-            dataList = []
-        }
-        else{
-            dataList = []
-            dataList = this.props.data
-            dataList.push(this.state.search)
-        }
         return (
             <Carousel
                 slideStyle={{ marginTop:20, paddingLeft:15 }}
-                data={dataList}
+                data={this.props.data}
                 renderItem={this._renderItem}
                 hasParallaxImages={true}
                 sliderWidth={this.state.windowWidth}

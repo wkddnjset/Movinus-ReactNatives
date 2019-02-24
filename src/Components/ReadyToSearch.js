@@ -22,8 +22,8 @@ export default class ReadyToSearchComponent extends Component {
     render() {
         return (
             <ReadyView>
-                <ReadyIcon type="AntDesign" name="frowno"/>
-                <ReadyText>검색어를 입력해주세요.</ReadyText>
+                <ReadyIcon type="AntDesign" name={this.props.icon}/>
+                <ReadyText>{this.props.text}</ReadyText>
             </ReadyView>
         )
     }
