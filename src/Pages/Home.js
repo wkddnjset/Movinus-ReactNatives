@@ -4,6 +4,7 @@ import { Container, Content, Button }  from 'native-base'
 import { Actions } from 'react-native-router-flux'
 import styled from 'styled-components/native'
 import axios from 'axios'
+import Spinner from 'react-native-loading-spinner-overlay'
 
 // Components
 import DrawerHeaderComponent from '../Components/DrawerHeader'
@@ -27,6 +28,7 @@ export default class Home extends Component<Props> {
         super(props)
 
         this.state = {
+            loading: true,
             nowPlayingList: [{genres:[], nations:[]}],
         }
     }
@@ -35,7 +37,6 @@ export default class Home extends Component<Props> {
             loading: true
         })
         if (this.state.nowPlayingList.length == 1 ){
-            console.log("API 콜")
             axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=d1bad0612955f9a34614bc14dda70291&language=ko-KR&page=1&region=kr`)
                 .then(res => {
                     var nowPlayingList = []
@@ -58,17 +59,25 @@ export default class Home extends Component<Props> {
                     nowPlayingList.push({title : "검색하기"})
                     this.setState({
                         nowPlayingList: nowPlayingList,
+                        loading: false
                     })
             })
         }
         else{
-            console.log("API 콜 안함")
+            this.setState({
+                loading: false
+            })
         }
     }
     render() {
         return (
             <Container style={{backgroundColor: "#FFF"}}>
                 <DrawerHeaderComponent/>
+                <Spinner
+                    visible={this.state.loading}
+                    textContent={'로딩중...'}
+                    textStyle={{color:"#FFF"}}
+                />
                 <Content>
                     <CarouselTitle>현재상영영화</CarouselTitle>
                     <CarouselComponent data={this.state.nowPlayingList}/>

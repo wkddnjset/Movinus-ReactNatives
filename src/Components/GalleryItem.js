@@ -36,44 +36,6 @@ export default class GalleryItemComponent extends Component {
         this.state = {
             windowWidth: Dimensions.get('window').width,
             windowHeight: Dimensions.get('window').height,
-            data:[
-                {
-                    title: "뺑반1뺑반1뺑반1뺑반1뺑반1뺑반1뺑반1",
-                    thumbnail: "http://img.cgv.co.kr/Movie/Thumbnail/Poster/000081/81561/81561_1000.jpg",
-                    rate: 7.2,
-                    text: "세상에서 제일 재미없는 이야기 뺑반, 이 이상의 노잼은 없다. 다신 보지말아야겠어"
-                },
-                {
-                    title: "뺑반2",
-                    thumbnail: "http://img.cgv.co.kr/Movie/Thumbnail/Poster/000081/81561/81561_1000.jpg",
-                    rate: 7.2,
-                    text: "세상에서 제일 재미없는 이야기 뺑반, 이 이상의 노잼은 없다. 다신 보지말아야겠어"                
-                },
-                {
-                    title: "뺑반3",
-                    thumbnail: "http://img.cgv.co.kr/Movie/Thumbnail/Poster/000081/81561/81561_1000.jpg",
-                    rate: 7.2,
-                    text: "세상에서 제일 재미없는 이야기 뺑반, 이 이상의 노잼은 없다. 다신 보지말아야겠어"                
-                },
-                {
-                    title: "뺑반4",
-                    thumbnail: "http://img.cgv.co.kr/Movie/Thumbnail/Poster/000081/81561/81561_1000.jpg",
-                    rate: 7.2,
-                    text: "세상에서 제일 재미없는 이야기 뺑반, 이 이상의 노잼은 없다. 다신 보지말아야겠어"                
-                },
-                {
-                    title: "뺑반5",
-                    thumbnail: "http://img.cgv.co.kr/Movie/Thumbnail/Poster/000081/81561/81561_1000.jpg",
-                    rate: 7.2,
-                    text: "세상에서 제일 재미없는 이야기 뺑반, 이 이상의 노잼은 없다. 다신 보지말아야겠어"                
-                },
-                {
-                    title: "뺑반6",
-                    thumbnail: "http://img.cgv.co.kr/Movie/Thumbnail/Poster/000081/81561/81561_1000.jpg",
-                    rate: 7.2,
-                    text: "세상에서 제일 재미없는 이야기 뺑반, 이 이상의 노잼은 없다. 다신 보지말아야겠어"                
-                },
-            ],
         }
         this._renderItem = this._renderItem.bind(this)
     }
@@ -111,7 +73,7 @@ export default class GalleryItemComponent extends Component {
         return(
             <FlatGrid
                 itemDimension={130}
-                items={this.state.data}
+                items={this.props.data}
                 style={{ flex:1 }}
                 spacing={10}
                 renderItem={this._renderItem} 

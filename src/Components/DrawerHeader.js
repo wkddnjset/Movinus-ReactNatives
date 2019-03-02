@@ -26,31 +26,38 @@ export default class DrawerHeaderComponent extends Component<Props> {
         Actions.drawerOpen()
     }
     openUser(){
-        AsyncStorage.getItem('token', (err, result) => {
-            if (result == null) {
-                Actions.login()
-            }
-            else {
-                Alert.alert(
-                    '로그아웃',
-                    '로그아웃 하시겠습니까?',
-                    [
-                        {text: '취소', onPress: () => console.log('취소')},
-                        {text: '확인', onPress: () => {
-                            AsyncStorage.removeItem('token')
-                            Toast.show({
-                                text: '로그아웃 되었습니다!',
-                                textStyle : { fontWeight: "bold" },
-                                type: "success",
-                                style: {
-                                    backgroundColor: "#4586C6"
-                                }
-                            })
-                        }},
-                    ]
-                )
-            }
-        })
+        Alert.alert(
+            '알림',
+            '준비중입니다.',
+            [
+                {text: '확인', onPress: () => console.log('취소')},
+            ]
+        )
+        // AsyncStorage.getItem('token', (err, result) => {
+        //     if (result == null) {
+        //         Actions.login()
+        //     }
+        //     else {
+        //         Alert.alert(
+        //             '로그아웃',
+        //             '로그아웃 하시겠습니까?',
+        //             [
+        //                 {text: '취소', onPress: () => console.log('취소')},
+        //                 {text: '확인', onPress: () => {
+        //                     AsyncStorage.removeItem('token')
+        //                     Toast.show({
+        //                         text: '로그아웃 되었습니다!',
+        //                         textStyle : { fontWeight: "bold" },
+        //                         type: "success",
+        //                         style: {
+        //                             backgroundColor: "#4586C6"
+        //                         }
+        //                     })
+        //                 }},
+        //             ]
+        //         )
+        //     }
+        // })
     }
     render() {
         return (

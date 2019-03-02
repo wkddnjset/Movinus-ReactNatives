@@ -9,7 +9,8 @@ import Spinner from 'react-native-loading-spinner-overlay'
 
 // Components
 import HeaderComponent from '../Components/Header'
-import SearchItemComponent from '../Components/SearchItem'
+import AddItemModalComponent from '../Components/AddItemModal'
+
 import { Actions } from 'react-native-router-flux'
 import axios from 'axios'
 
@@ -53,17 +54,21 @@ export default class Detail extends Component<Props> {
         super(props)
 
         this.state = {
-            loading: false,
+            isModalVisible:false,
+            loading: true,
             data : {
                 genres: [],
                 nations: []
             }
         }
+        this._toggleModal = this._toggleModal.bind(this) 
+    }
+    _toggleModal(){
+        this.setState({
+            isModalVisible: !this.state.isModalVisible
+        })
     }
     componentDidMount() {
-        this.setState({
-            loading: true
-        })
         axios.get(`https://api.themoviedb.org/3/movie/${this.props.id}?api_key=d1bad0612955f9a34614bc14dda70291&language=ko-KR`)
             .then(res => {
                 const data = {
@@ -117,7 +122,7 @@ export default class Detail extends Component<Props> {
                                             <Rating
                                                 readonly
                                                 ratingCount={5}
-                                                startingValue={this.state.rate/2}
+                                                startingValue={this.state.data.rate/2}
                                                 imageSize={17}
                                                 tintColor='#182433'
                                                 style={{ alignItems:"flex-start" }}
@@ -148,8 +153,14 @@ export default class Detail extends Component<Props> {
                         )
                     }
                     <ActionButton
-                        buttonColor="#4586C6"
-                        onPress={() => { console.log("hi")}}
+                        buttonColor="rgba(69, 134, 198, 0.8)"
+                        offsetX={20}
+                        offsetY={20}
+                        onPress={this._toggleModal}
+                    />
+                    <AddItemModalComponent
+                        isModalVisible={this.state.isModalVisible}
+                        _toggleModal={this._toggleModal}
                     />
                 </BackgourndImg>
             </Container>

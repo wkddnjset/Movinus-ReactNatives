@@ -88,7 +88,7 @@ export default class DetailMy extends Component<Props> {
                                 <Rating
                                     readonly
                                     ratingCount={5}
-                                    startingValue={this.state.rate/2}
+                                    startingValue={this.state.rate}
                                     imageSize={17}
                                     style={{ alignItems:"flex-start" }}
                                 />

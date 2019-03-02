@@ -3,6 +3,8 @@ import {AsyncStorage, Text, View} from 'react-native'
 import styled from 'styled-components/native'
 import { Container, Icon, Button, Content, Item, Input, Header }  from 'native-base'
 import { Actions } from 'react-native-router-flux'
+import { openDatabase } from 'react-native-sqlite-storage';
+
 // Components
 import DrawerHeaderComponent from '../Components/DrawerHeader'
 import HeaderComponent from '../Components/Header'
@@ -24,6 +26,9 @@ const SearchBar = styled(Item)`
     paddingLeft : 20;
     paddingRight : 20;
 `
+
+var db = openDatabase({name: 'ver0.1_test.db', createFromLocation:'~db/database.db'})
+
 export default class MyList extends Component<Props> {
     constructor (props) {
         super(props)
@@ -32,8 +37,23 @@ export default class MyList extends Component<Props> {
             loading: false,
             data: [],
             current_page: 1,
-            hasMore: true
+            hasMore: true,
+            MyList: []
         }
+        db.transaction((tx) => {
+            tx.executeSql('SELECT * FROM MyList', [], (tx, results) => {
+                var len = results.rows.length
+                var MyList = []
+                for (let i = 0; i < len; i++) {
+                  let row = results.rows.item(i);
+                  MyList.push(row)
+                }
+                console.log(MyList)
+                this.setState({
+                    MyList: MyList
+                })
+            })
+        })
     }
     onValueChange(value){
         this.setState({
@@ -44,29 +64,8 @@ export default class MyList extends Component<Props> {
         return (
             <Container>
                 <DrawerHeaderComponent/>
-                <SeacrhProvider>
-                    {/* <SeacrhConsumer>
-                        {
-                            (SeacrhContext) => (
-                                <SearchBar>
-                                    <Input 
-                                        placeholder='검색어를 입력해주세요' 
-                                        onChangeText={(text) => SeacrhContext.actions.search(text)}/>
-                                    <Icon active name='search'/>
-                                </SearchBar>
-                            )
-                        }
-                    </SeacrhConsumer> */}
-                    <SeacrhConsumer>
-                        {
-                            (SeacrhContext) => (
-                                <GalleryItemComponent 
-                                    data={SeacrhContext.state.data}
-                                    status={SeacrhContext.state.status}/>
-                            )
-                        }
-                    </SeacrhConsumer>
-                </SeacrhProvider>
+                <GalleryItemComponent 
+                    data={this.state.MyList}/>
             </Container>
         )
     }

@@ -19,11 +19,17 @@ const instructions = Platform.select({
   android:
     'Double tap R on your keyboard to reload,\n' +
     'Shake or press menu button for dev menu',
-});
+})
 
 type Props = {}
 
 export default class App extends Component<Props> {
+  constructor(props){
+    super(props)
+    this.state = {
+
+    }
+  }
   componentDidMount() {
       SplashScreen.show()
       setInterval(() => SplashScreen.hide(), 1200)

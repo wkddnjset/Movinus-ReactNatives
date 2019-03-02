@@ -16,14 +16,15 @@ export default class SideMenuComponent extends Component {
     Actions.drawerClose()
   }
   toMyList(){
-    AsyncStorage.getItem('token', (err, result) => {
-      if (result == null) {
-        Actions.login()
-      }
-      else {
-        Actions.my_list()
-      }
-    })
+    Actions.my_list()
+    // AsyncStorage.getItem('token', (err, result) => {
+    //   if (result == null) {
+    //     Actions.login()
+    //   }
+    //   else {
+    //     Actions.my_list()
+    //   }
+    // })
   }
   render() {
     return (
