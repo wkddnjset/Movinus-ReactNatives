@@ -1,11 +1,13 @@
 import React, {Component} from 'react'
-import { Text, View, ImageBackground } from 'react-native'
+import { Text, View, ImageBackground, Alert } from 'react-native'
 import { Container, Icon, Button, Thumbnail }  from 'native-base'
 import { Rating } from 'react-native-ratings'
 import styled from 'styled-components/native'
 import { Col, Row, Grid } from 'react-native-easy-grid'
 import ActionButton from 'react-native-action-button'
 import Spinner from 'react-native-loading-spinner-overlay'
+import DateTimePicker from 'react-native-modal-datetime-picker'
+import { openDatabase } from 'react-native-sqlite-storage'
 
 // Components
 import HeaderComponent from '../Components/Header'
@@ -49,24 +51,122 @@ const RateText = styled.Text`
 `
 type Props = {};
 
+var db = openDatabase({name: 'ver0.1_test.db', createFromLocation:'~db/database.db'})
+
+
 export default class Detail extends Component<Props> {
     constructor (props) {
         super(props)
 
         this.state = {
             isModalVisible:false,
+            isDateTimePickerVisible: false,
+            selectedDate: null,
             loading: true,
+            rate: null,
+            rateView:"별점을 선택해주세요",
+            title: null,
+            review: null,
             data : {
                 genres: [],
                 nations: []
             }
         }
-        this._toggleModal = this._toggleModal.bind(this) 
+        this._toggleModal = this._toggleModal.bind(this)
+        this._showDateTimePicker = this._showDateTimePicker.bind(this)
+        this._hideDateTimePicker = this._hideDateTimePicker.bind(this)
+        this._handleDatePicked = this._handleDatePicked.bind(this)
+        this._updateItem = this._updateItem.bind(this)
+        this._changeTitle = this._changeTitle.bind(this)
+        this._changeReview = this._changeReview.bind(this)
+        this._onFinishRating = this._onFinishRating.bind(this)
+    }
+    _changeTitle(text){
+        this.setState({
+            title: text
+        })
+    }
+    _changeReview(text){
+        this.setState({
+            review: text
+        })
+    }
+    _onFinishRating(number){
+        var rateView = ""
+        switch (number){
+            case 1:
+                rateView = "세상에 둘도없는 노잼ㅠㅠ"
+                break 
+            case 2:
+                rateView = "내가 헛것을 봤나.."
+                break 
+            case 3:
+                rateView = "킬링타임 대마왕"
+                break 
+            case 4:
+                rateView = "두번볼 가치가 있다!"
+                break 
+            case 5:
+                rateView = "인생영화 드디어 발견!"
+                break 
+        }
+        this.setState({
+            rateView: rateView,
+            rate: number
+        })
     }
     _toggleModal(){
         this.setState({
-            isModalVisible: !this.state.isModalVisible
+            isModalVisible: !this.state.isModalVisible,
+            rate: null,
+            title: null,
+            review: null,
+            selectedDate: null,
+            rateView:"별점을 선택해주세요",
         })
+    }
+    _showDateTimePicker(){
+        this.setState({ isDateTimePickerVisible: true })
+    }
+    _hideDateTimePicker(){
+        this.setState({ isDateTimePickerVisible: false })
+    }
+    _handleDatePicked(date){
+        const d = date
+        this.setState({
+            selectedDate: d.getFullYear() + "년 " + (d.getMonth() + 1) + "월 " + d.getDate() + "일"
+        })
+        this._hideDateTimePicker()
+    }
+    _updateItem(title, review, rate){
+        const id = this.state.data.id
+        const thumbnail = this.state.data.thumbnail
+        const date = this.state.selectedDate
+        console.log(id)
+        console.log(title)
+        console.log(review)
+        console.log(thumbnail)
+        console.log(date)
+        console.log(rate)
+        if (title == null || review == null || date ==null || rate == null){
+            Alert.alert(
+                "알림",
+                "빈칸을 채워주세요",
+                [
+                    {text: '확인'},
+                ]
+            )
+        }
+        else{
+            db.transaction((tx) => {
+                tx.executeSql(`
+                INSERT INTO MyList ( id, rate, review, title, create_at, thumbnail )
+                VALUES
+                ( ${id}, ${rate}, ${review}, ${title}, ${create_at}, ${thumbnail} );`, [], (tx, results) => {
+                    console.log(results)
+                })
+            })
+        }
     }
     componentDidMount() {
         axios.get(`https://api.themoviedb.org/3/movie/${this.props.id}?api_key=d1bad0612955f9a34614bc14dda70291&language=ko-KR`)
@@ -86,7 +186,7 @@ export default class Detail extends Component<Props> {
                 this.setState({
                     data: data,
                     loading: false
-                });
+                })
         })
     }
     render() {
@@ -160,7 +260,22 @@ export default class Detail extends Component<Props> {
                     />
                     <AddItemModalComponent
                         isModalVisible={this.state.isModalVisible}
+                        selectedDate={this.state.selectedDate}
+                        _showDateTimePicker={this._showDateTimePicker}
                         _toggleModal={this._toggleModal}
+                        _updateItem={this._updateItem}
+                        _changeTitle={this._changeTitle}
+                        _changeReview={this._changeReview}
+                        _onFinishRating={this._onFinishRating}
+                        rateView = {this.state.rateView}
+                        rate = {this.state.rate}
+                        title = {this.state.title}
+                        review = {this.state.review}
+                    />
+                    <DateTimePicker
+                        isVisible={this.state.isDateTimePickerVisible}
+                        onConfirm={this._handleDatePicked}
+                        onCancel={this._hideDateTimePicker}
                     />
                 </BackgourndImg>
             </Container>

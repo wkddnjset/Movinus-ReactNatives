@@ -3,7 +3,7 @@ import {AsyncStorage, Text, View} from 'react-native'
 import styled from 'styled-components/native'
 import { Container, Icon, Button, Content, Item, Input, Header }  from 'native-base'
 import { Actions } from 'react-native-router-flux'
-import { openDatabase } from 'react-native-sqlite-storage';
+import { openDatabase } from 'react-native-sqlite-storage'
 
 // Components
 import DrawerHeaderComponent from '../Components/DrawerHeader'

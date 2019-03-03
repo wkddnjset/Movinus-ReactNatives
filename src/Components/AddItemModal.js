@@ -1,9 +1,10 @@
 
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text } from 'react-native'
 import { Button, Item, Input, Textarea, Form } from 'native-base'
 import { AirbnbRating  } from 'react-native-ratings'
 import styled from 'styled-components/native'
+import DateTimePicker from 'react-native-modal-datetime-picker'
 import Modal from "react-native-modal"
 
 const ModalWrapper = styled(Modal)`
@@ -32,6 +33,10 @@ const ButtonCancel = styled(Button)`
     backgroundColor: #999
     marginRight: 10;
 `
+const ButtonComfirm = styled(Button)`
+    backgroundColor: rgb(69, 134, 198);
+    marginRight: 10;
+`
 const ButtonText = styled.Text`
     color: #FFF;
     paddingLeft: 20;
@@ -43,71 +48,43 @@ const ReviewTitilInput = styled(Input)`
     padding: 10px;
 `
 const ReviewTextarea = styled(Textarea)`
-    width: 100%;
+    width: 99%;
+    alignItems:center;
 `
 export default class AddItemModalComponent extends Component {
-    constructor (props) {
-        super(props)
-
-        this.state = {
-            title:"별점을 선택해주세요"
-        }
-        this._onFinishRating = this._onFinishRating.bind(this)
-    }
-    _onFinishRating(number){
-        var title = ""
-        switch (number){
-            case 1:
-                title = "세상에 둘도없는 노잼ㅠㅠ"
-                break 
-            case 2:
-                title = "내가 헛것을 봤나.."
-                break 
-            case 3:
-                title = "킬링타임 대마왕"
-                break 
-            case 4:
-                title = "두번볼 가치가 있다!"
-                break 
-            case 5:
-                title = "인생영화 드디어 발견!"
-                break 
-        }
-        this.setState({
-            title: title
-        })
-    }
-    _updateItem(){
-        console.log("Updaet")
-    }
+    
     render() {
+        const { rateView, rate, title, review, selectedDate, isModalVisible } = this.props
+        const { _onFinishRating, _showDateTimePicker, _changeTitle, _changeReview, _toggleModal, _updateItem } = this.props
         return (
             <ModalWrapper 
-            isVisible={this.props.isModalVisible}
+            isVisible={isModalVisible}
             backdropOpacity={0.4}>
                 <ModalBox>
-                    <ModalTitle>{this.state.title}</ModalTitle>
+                    <ModalTitle>{rateView}</ModalTitle>
                     <AirbnbRating 
                         count={5}
                         defaultRating={0}
                         imageSize={40}
                         style={{color:"#333"}}
                         showRating={false}
-                        onFinishRating={this._onFinishRating}
+                        onFinishRating={_onFinishRating}
                     />
                     <Item regular style={{marginTop: 20}}>
-                        <ReviewTitilInput placeholder='한줄요약' />
+                        <ReviewTitilInput placeholder='한줄요약' onChangeText={_changeTitle}/>
                     </Item>
-                    <ReviewTextarea rowSpan={5} bordered placeholder="리뷰"/>
+                    <Item regular style={{marginTop: 5}} onPress={_showDateTimePicker}>
+                        <ReviewTitilInput placeholder="날짜" value={selectedDate} editable={false}/>
+                    </Item>
+                    <ReviewTextarea rowSpan={5} bordered placeholder="리뷰" onChangeText={_changeReview}/>
                     <ButtonGroup>
-                        <ButtonCancel onPress={this.props._toggleModal}>
+                        <ButtonCancel onPress={_toggleModal}>
                             <ButtonText>취소</ButtonText>
                         </ButtonCancel>
-                        <Button info onPress={this._updateItem}>
+                        <ButtonComfirm onPress={() => _updateItem(title, review, rate)}>
                             <ButtonText>확인</ButtonText>
-                        </Button>
+                        </ButtonComfirm>
                     </ButtonGroup>
-                    
                 </ModalBox>
             </ModalWrapper>
         );
