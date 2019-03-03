@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Text, View, ImageBackground, Alert } from 'react-native'
+import { Text, View, ImageBackground, Alert, Keyboard } from 'react-native'
 import { Container, Icon, Button, Thumbnail }  from 'native-base'
 import { Rating } from 'react-native-ratings'
 import styled from 'styled-components/native'
@@ -51,8 +51,7 @@ const RateText = styled.Text`
 `
 type Props = {};
 
-var db = openDatabase({name: 'ver0.1_test.db', createFromLocation:'~db/database.db'})
-
+var db = openDatabase({name: 'test.db', createFromLocation:'~db/database.db'} )
 
 export default class Detail extends Component<Props> {
     constructor (props) {
@@ -126,6 +125,7 @@ export default class Detail extends Component<Props> {
         })
     }
     _showDateTimePicker(){
+        Keyboard.dismiss()
         this.setState({ isDateTimePickerVisible: true })
     }
     _hideDateTimePicker(){
@@ -139,15 +139,9 @@ export default class Detail extends Component<Props> {
         this._hideDateTimePicker()
     }
     _updateItem(title, review, rate){
-        const id = this.state.data.id
+        const id = parseInt(this.state.data.id)
         const thumbnail = this.state.data.thumbnail
         const date = this.state.selectedDate
-        console.log(id)
-        console.log(title)
-        console.log(review)
-        console.log(thumbnail)
-        console.log(date)
-        console.log(rate)
         if (title == null || review == null || date ==null || rate == null){
             Alert.alert(
                 "알림",
@@ -158,13 +152,28 @@ export default class Detail extends Component<Props> {
             )
         }
         else{
+            
             db.transaction((tx) => {
                 tx.executeSql(`
-                INSERT INTO MyList ( id, rate, review, title, create_at, thumbnail )
-                VALUES
-                ( ${id}, ${rate}, ${review}, ${title}, ${create_at}, ${thumbnail} );`, [], (tx, results) => {
-                    console.log(results)
-                })
+                    INSERT INTO MyList ( id, rate, review, title, created_at, thumbnail ) 
+                    VALUES 
+                    ( ?, ?, ?, ?, ?, ? );`, 
+                    [id, parseInt(rate), review, title, date, thumbnail], (tx, results) => {
+                        this._toggleModal()
+                    }, err => {
+                        console.log(err)
+                        if (err.code == 0 ){
+                            var message = "이미 등록된 리뷰입니다."
+                        }
+                        else{ var message = err.message }
+                        Alert.alert(
+                            "알림",
+                            message,
+                            [
+                                {text: '확인', onPress:() => this._toggleModal()},
+                            ]
+                        )
+                    })
             })
         }
     }

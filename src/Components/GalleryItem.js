@@ -39,12 +39,17 @@ export default class GalleryItemComponent extends Component {
         }
         this._renderItem = this._renderItem.bind(this)
     }
-    toDetail(){
-        Actions.detail_my()
+    toDetail(id, rate, title, review){
+        Actions.detail_my({
+            id: id,
+            rate: rate, 
+            title: title, 
+            review: review
+        })
     }
     _renderItem ({item, index}) {
         return (
-            <TouchableOpacity onPress={this.toDetail}>
+            <TouchableOpacity onPress={() => this.toDetail(item.id, item.rate, item.title, item.review)}>
                 <Image
                     source={{ uri: item.thumbnail }}
                     style={{ width: (this.state.windowWidth/2)-20, height:this.state.windowHeight/2.5, borderRadius:8 }}
@@ -53,18 +58,17 @@ export default class GalleryItemComponent extends Component {
                     { item.title }
                 </ReviewTitle>
                 <RatingView>
-                    <RateText>내 평점  </RateText>
+                    <RateText>내 평점({item.rate}.0) </RateText>
                     <Rating
                         readonly
                         ratingCount={5}
-                        startingValue={item.rate/2}
+                        startingValue={item.rate}
                         imageSize={17}
                         style={{ alignItems:"flex-start" }}
                     />
-                    <RateText>  {item.rate}</RateText>
                 </RatingView>
                 <ReviewText numberOfLines={2}>
-                    { item.text }
+                    { item.review }
                 </ReviewText>
             </TouchableOpacity>
         )
@@ -80,33 +84,4 @@ export default class GalleryItemComponent extends Component {
             />
         )
     }
-    // render() {
-    //     if(this.props.status == null){
-    //         return(
-    //             <FlatGrid
-    //                 itemDimension={130}
-    //                 items={this.state.data}
-    //                 style={{ flex:1 }}
-    //                 spacing={10}
-    //                 renderItem={this._renderItem} 
-    //             />
-    //         )
-    //     }
-    //     else if (this.props.status == "Error"){
-    //         return (
-    //             <ReadyToSearchComponent/>
-    //         )
-    //     }
-    //     else {
-    //         return (
-    //             <FlatGrid
-    //                 itemDimension={130}
-    //                 items={this.props.data}
-    //                 style={{ flex:1 }}
-    //                 spacing={10}
-    //                 renderItem={this._renderItem} 
-    //             />
-    //         )
-    //     }
-    // }
 }

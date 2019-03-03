@@ -10,6 +10,7 @@ import Search from './src/Pages/Search'
 import Login from './src/Pages/Login'
 import Detail from './src/Pages/Detail'
 import DetailMy from './src/Pages/DetailMy'
+import WebViewPage from './src/Pages/WebView'
 // Components
 import SideMenuComponent from './src/Components/SideMenu'
 import DrawerHeaderComponent from './src/Components/DrawerHeader'
@@ -55,6 +56,7 @@ export default class App extends Component<Props> {
             <Scene key="detail" component={Detail} hideNavBar/>
             <Scene key="detail_my" component={DetailMy} hideNavBar/>
             <Scene key="login" component={Login} hideNavBar/>
+            <Scene key="webview" component={WebViewPage} hideNavBar/>
           </Scene>
         </Router>
       </Root>

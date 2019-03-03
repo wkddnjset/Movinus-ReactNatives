@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Button, Icon, Content, ListItem, Left, Body, Right, Switch } from 'native-base'
+import { Container, Button, Icon, Content, ListItem, Left, Body, Linking, View } from 'native-base'
 import styled from 'styled-components/native'
 import { Text, AsyncStorage } from 'react-native'
 import { Actions } from 'react-native-router-flux'
@@ -11,6 +11,19 @@ const SideText = styled.Text`
   fontSize: 18;
   color: #182433;
 `
+const SuggestBtn = styled(Button)`
+  background: #4586C6;
+  alignSelf: center;
+  justifyContent: center;
+  paddingLeft: 20;
+  paddingRight: 20;
+  borderRadius: 4;
+`
+const SuggestText = styled.Text`
+  fontSize: 17;
+  color: #FFF;
+`
+
 export default class SideMenuComponent extends Component {
   closeDrawer(){
     Actions.drawerClose()
@@ -25,6 +38,9 @@ export default class SideMenuComponent extends Component {
     //     Actions.my_list()
     //   }
     // })
+  }
+  openLink(){
+    Actions.webview()
   }
   render() {
     return (
@@ -62,6 +78,11 @@ export default class SideMenuComponent extends Component {
             </Body>
           </ListItem>
         </Content>
+        <View style={{flex:2, width:"100%", alignItems:"center"}}>
+          <SuggestBtn onPress={this.openLink}>
+            <SuggestText>제안/요청하기</SuggestText>
+          </SuggestBtn>
+        </View>
       </Container>
     );
   }
